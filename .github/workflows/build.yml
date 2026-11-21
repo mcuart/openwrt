@@ -33,7 +33,7 @@ jobs:
 
       - name: 3. 克隆官方 OpenWrt 源码
         run: |
-          git clone https://github.com/openwrt/openwrt.git -b v25.12.6 openwrt
+          git clone -b v25.12.6 --single-branch --depth 1 https://github.com/openwrt/openwrt.git openwrt
 
       - name: 4. 注入你的设备树、补丁与板级配置
         run: |
