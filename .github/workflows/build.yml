@@ -59,7 +59,7 @@ jobs:
         working-directory: openwrt
         run: |
           make download -j8
-          make -j$(nproc) V=s
+          make -j$(nproc)
 
       - name: 8. 整理固件并发布至 GitHub Releases
         uses: softprops/action-gh-release@v2
