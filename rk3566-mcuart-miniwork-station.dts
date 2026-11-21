@@ -14,7 +14,7 @@
 
 / {
 	model = "mcuart Miniwork Station 2026121_2A1_4C4";
-	compatible = "mcuart,Miniwork-Station", "rockchip,rk3566";
+	compatible = "mcuart,miniwork-station", "rockchip,rk3566";
 
 	aliases {
 		ethernet0 = &gmac1;
