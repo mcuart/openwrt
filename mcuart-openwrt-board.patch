@@ -1,0 +1,57 @@
+diff --git a/feeds.conf.default b/feeds.conf.default
+index 5741d9c187..7882dd5e51 100644
+--- a/feeds.conf.default
++++ b/feeds.conf.default
+@@ -3,3 +3,4 @@ src-git luci https://git.openwrt.org/project/luci.git^75a306df84a020c57a631ef5b4
+ src-git routing https://git.openwrt.org/feed/routing.git^48c808034414a2112cf9d5261a20a320e8d0d170
+ src-git telephony https://git.openwrt.org/feed/telephony.git^2618106d5846a4a542fdf5809f0d3ed228ce439b
+ src-git video https://github.com/openwrt/video.git^094bf58da6682f895255a35a84349a79dab4bf95
++src-git openclash https://github.com/vernesong/openclash.git^e553e82e01c697aefbe1555261a503f425e00ccd
+diff --git a/package/boot/uboot-rockchip/Makefile b/package/boot/uboot-rockchip/Makefile
+index f85ce2e21f..037796f63a 100644
+--- a/package/boot/uboot-rockchip/Makefile
++++ b/package/boot/uboot-rockchip/Makefile
+@@ -239,7 +239,8 @@ define U-Boot/rock-3c-rk3566
+   $(U-Boot/rk3566/Default)
+   NAME:=ROCK 3C
+   BUILD_DEVICES:= \
+-    radxa_rock-3c
++    radxa_rock-3c \
++    mcuart_miniwork-station
+ endef
+ 
+ # RK3568 boards
+diff --git a/target/linux/rockchip/armv8/base-files/etc/board.d/02_network b/target/linux/rockchip/armv8/base-files/etc/board.d/02_network
+index 3335af7b6f..6d159a6e61 100644
+--- a/target/linux/rockchip/armv8/base-files/etc/board.d/02_network
++++ b/target/linux/rockchip/armv8/base-files/etc/board.d/02_network
+@@ -108,6 +108,9 @@ rockchip_setup_macs()
+ 	xunlong,orangepi-r1-plus-lts)
+ 		wan_mac=$(macaddr_add "$(cat /sys/class/net/eth1/address)" -1)
+ 		;;
++  mcuart,miniwork-station)
++		lan_mac=$(macaddr_generate_from_mmc_cid mmcblk*)
++		;;
+ 	esac
+ 
+ 	[ -n "$lan_mac" ] && ucidef_set_interface_macaddr "lan" $lan_mac
+diff --git a/target/linux/rockchip/image/armv8.mk b/target/linux/rockchip/image/armv8.mk
+index 55357c558c..7a389e7fb6 100644
+--- a/target/linux/rockchip/image/armv8.mk
++++ b/target/linux/rockchip/image/armv8.mk
+@@ -468,3 +468,15 @@ define Device/xunlong_orangepi-r1-plus-lts
+   DEVICE_PACKAGES := kmod-usb-net-rtl8152
+ endef
+ TARGET_DEVICES += xunlong_orangepi-r1-plus-lts
++
++define Device/mcuart_miniwork-station
++  $(Device/rk3566)
++  DEVICE_VENDOR := mcuart
++  DEVICE_MODEL := Miniwork Station 2026121_2A1_4C4
++  UBOOT_DEVICE_NAME := rock-3c-rk3566
++  DEVICE_DTS := rk3566-mcuart-miniwork-station
++  DEVICE_PACKAGES := kmod-usb-net-cdc-ncm kmod-usb-net-rndis
++endef
++TARGET_DEVICES += mcuart_miniwork-station
++
++
