@@ -17,7 +17,7 @@
 	compatible = "mcuart,Miniwork-Station", "rockchip,rk3566";
 
 	aliases {
-		ethernet1 = &gmac1;
+		ethernet0 = &gmac1;
 		mmc0 = &sdmmc0;
 		mmc1 = &sdhci;
 		led-boot = &power_led;
