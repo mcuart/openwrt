@@ -40,6 +40,9 @@ jobs:
           mkdir -p openwrt/target/linux/rockchip/files/arch/arm64/boot/dts/rockchip/
           cp rk3566-mcuart-miniwork-station.dts openwrt/target/linux/rockchip/files/arch/arm64/boot/dts/rockchip/
           cp 999-arm64-dts-rockchip-add-mcuart-miniwork-station.patch openwrt/target/linux/rockchip/patches-6.12/
+          mkdir -p openwrt/files/etc/openclash/core/
+          cp clash openwrt/files/etc/openclash/core/
+          chmod +x files/etc/openclash/core/clash
           cd openwrt
           git apply ../mcuart-openwrt-board.patch
 

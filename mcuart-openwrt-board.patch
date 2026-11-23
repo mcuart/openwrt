@@ -46,8 +46,8 @@ index 55357c558c..7a389e7fb6 100644
 +
 +define Device/mcuart_miniwork-station
 +  $(Device/rk3566)
-+  DEVICE_VENDOR := mcuart
-+  DEVICE_MODEL := Miniwork Station 2026121_2A1_4C4
++  DEVICE_VENDOR := Mcuart
++  DEVICE_MODEL := Miniwork Station 20261123_2A1_4C4
 +  UBOOT_DEVICE_NAME := rock-3c-rk3566
 +  DEVICE_DTS := rk3566-mcuart-miniwork-station
 +  DEVICE_PACKAGES := kmod-usb-net-cdc-ncm kmod-usb-net-rndis

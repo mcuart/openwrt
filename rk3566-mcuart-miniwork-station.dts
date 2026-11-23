@@ -13,7 +13,7 @@
 #include "rk3566.dtsi"
 
 / {
-	model = "mcuart Miniwork Station 2026121_2A1_4C4";
+	model = "Mcuart Miniwork Station 20261123_2A1_4C4";
 	compatible = "mcuart,miniwork-station", "rockchip,rk3566";
 
 	aliases {
