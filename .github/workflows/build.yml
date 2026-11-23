@@ -33,7 +33,7 @@ jobs:
 
       - name: 3. 克隆官方 OpenWrt 源码
         run: |
-          git clone -b v25.12.2 --single-branch --depth 1 https://github.com/immortalwrt/immortalwrt.git openwrt
+          git clone -b v25.12.6 --single-branch --depth 1 https://github.com/openwrt/openwrt.git openwrt
 
       - name: 4. 注入你的设备树、补丁与板级配置
         run: |
@@ -42,7 +42,7 @@ jobs:
           cp 999-arm64-dts-rockchip-add-mcuart-miniwork-station.patch openwrt/target/linux/rockchip/patches-6.12/
           mkdir -p openwrt/files/etc/openclash/core/
           cp clash openwrt/files/etc/openclash/core/
-          chmod +x files/etc/openclash/core/clash
+          chmod +x openwrt/files/etc/openclash/core/clash
           cd openwrt
           git apply ../mcuart-openwrt-board.patch
 
