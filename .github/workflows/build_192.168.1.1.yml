@@ -2,11 +2,11 @@ name: Build OpenWrt for Mcuart Miniwork Station
 
 on:
   workflow_dispatch:  # 支持在 GitHub 网页端手动点击运行
-  push:
-    paths:            # 当你修改了 DTS、补丁或配置时自动触发编译
-      - '**.dts'
-      - '**.patch'
-      - 'mcuart.seed'
+  #push:
+  #  paths:            # 当你修改了 DTS、补丁或配置时自动触发编译
+  #    - '**.dts'
+  #    - '**.patch'
+  #    - 'mcuart.seed'
 
 permissions:
   contents: write     # 赋予自动创建 Release 并上传固件的权限
@@ -45,8 +45,10 @@ jobs:
           chmod +x openwrt/files/etc/openclash/core/clash
           cd openwrt
           git apply ../mcuart-openwrt-board.patch
+          sed -i 's/OpenWrt/MiniWorkStation/g' package/base-files/files/bin/config_generate
+          sed -i 's/GMT0/GMT8/g' package/base-files/files/bin/config_generate
 
-      - name: 5. 更新并安装 Feeds (含 OpenClash)
+      - name: 5. 更新并安装 Feeds
         working-directory: openwrt
         run: |
           ./scripts/feeds update -a
@@ -68,7 +70,12 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: build-${{ github.run_number }}
+          target_commitish: ${{ github.sha }}
           name: Mcuart Miniwork Station Firmware #${{ github.run_number }}
+          body: |
+            ### 固件构建信息
+            - **触发提交**: ${{ github.event.head_commit.message }}
+            - **Commit ID**: ${{ github.sha }}
           files: |
             openwrt/bin/targets/rockchip/armv8/*sysupgrade.img.gz
             openwrt/bin/targets/rockchip/armv8/*.manifest
