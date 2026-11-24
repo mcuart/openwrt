@@ -41,13 +41,14 @@ jobs:
           cp rk3566-mcuart-miniwork-station.dts openwrt/target/linux/rockchip/files/arch/arm64/boot/dts/rockchip/
           cp 999-arm64-dts-rockchip-add-mcuart-miniwork-station.patch openwrt/target/linux/rockchip/patches-6.12/
           mkdir -p openwrt/files/etc/openclash/core/
-          cp clash openwrt/files/etc/openclash/core/
-          chmod +x openwrt/files/etc/openclash/core/clash
+          cp clash_meta openwrt/files/etc/openclash/core/
+          chmod +x openwrt/files/etc/openclash/core/clash_meta
           cd openwrt
           git apply ../mcuart-openwrt-board.patch
           sed -i 's/192.168.1.1/192.168.31.8/g' package/base-files/files/bin/config_generate
           sed -i 's/OpenWrt/MiniWorkStation/g' package/base-files/files/bin/config_generate
-          sed -i 's/GMT0/GMT8/g' package/base-files/files/bin/config_generate
+          sed -i "s/'GMT0'/'GMT-8'/g; s/'UTC'/'Asia\/Shanghai'/g" package/base-files/files/bin/config_generate
+
 
       - name: 5. 更新并安装 Feeds
         working-directory: openwrt
